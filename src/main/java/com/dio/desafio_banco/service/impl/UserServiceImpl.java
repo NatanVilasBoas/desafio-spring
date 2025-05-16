@@ -2,6 +2,7 @@ package com.dio.desafio_banco.service.impl;
 
 import com.dio.desafio_banco.domain.model.User;
 import com.dio.desafio_banco.domain.repository.UserRepository;
+import com.dio.desafio_banco.exception.DuplicateAccountNumberException;
 import com.dio.desafio_banco.service.UserService;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) {
-        if(user.getId() != null && userRepository.existsByAccountNumber(user.getAccount().getNumber())) throw  new IllegalArgumentException("This user ID already exists");
+        if(userRepository.existsByAccount_Number(user.getAccount().getNumber())) throw  new DuplicateAccountNumberException("This user ID already exists");
         return userRepository.save(user);
     }
 }
